@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Web.Models.GVIENCHUCVU>
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content row col s12 reset-margin">
+        <div class="dashboard-inner-item ">
+            @Html.ActionLink("Gác thi", "GacThi", "Teacher", new { @class = "btn full-width btn-danger" })
+        </div>
+        @foreach (var item in Model)
+        {
+            if (item.CHUCVU.TENCVU == "Nhân viên khảo thí"
+                || item.CHUCVU.TENCVU == "Ban chủ nhiệm khoa"
+                || item.CHUCVU.TENCVU == "Trưởng bộ môn")
+            {
+                <div class="dashboard-inner-item ">
+                    @Html.ActionLink("Thống kê điểm", "ThongKeDiem", "Teacher", new { chucvu = item.CHUCVU.TENCVU }, new { @class = "btn full-width btn-danger" })
+                </div>
+            }
+        }
+</div>
+
+    
+

@@ -1,0 +1,83 @@
+﻿@model Web.Models.LstThamGiaThi
+@{
+    ViewBag.Title = "PhongThi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/Content/bootstrap/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    int danopbai = 0;
+}
+
+<div>
+    @Html.ActionLink("Trở về", "GacThi", new { @style = "font-size:20px" })
+</div>
+<br />
+<div class="col-md-6">
+    @using (Html.BeginForm())
+    {
+        <p>
+            Tìm kiếm: @Html.TextBox("SearchString")
+            <input type="submit" value="Tìm kiếm" />
+        </p>
+    }
+</div>
+<div class="col-md-6">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div>@Html.DropDownList("tinhtrang", (IEnumerable<SelectListItem>)ViewBag.dsTinhTrang, "Chọn", new { @class = "form-control" })</div>
+        <input type="submit" value="Lọc" />
+    }
+</div>
+<br />
+@using (Html.BeginForm("PhongThi", "Teacher", FormMethod.Post))
+{
+    for (int i = 0; i < Model.lst.Count; i++)
+    {
+        if (Model.lst[i].tinhTrang == "2")
+        {
+            danopbai++;
+        }
+    }
+    <p>@danopbai / @Model.lst.Count</p>
+    <br />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>STT</td>
+                <td>ID Sinh viên</td>
+                <td>Tên sinh viên</td>
+                <td>Tình trạng</td>
+                <td>Thời gian bắt đầu</td>
+                <td>Thời gian kết thúc</td>
+                <td>Thời gian làm bài</td>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.lst.Count; i++)
+            {
+                int stt = i + 1;
+                <tr>
+                    <td>@stt</td>
+                    <td>@Model.lst[i].idSV</td>
+                    <td>@Model.lst[i].tenSV</td>
+                    @if (Model.lst[i].tinhTrang == "0")
+                    {
+                        <td>Chưa đăng nhập</td>
+                    }
+                    else if (Model.lst[i].tinhTrang == "1")
+                    {
+                        <td>Đang làm bài</td>
+                    }
+                    else
+                    {
+                        <td>Đã nộp bài</td>
+                    }
+                    <td>@Model.lst[i].gioBD</td>
+                    <td>@Model.lst[i].gioKT</td>
+                    <td>@Model.lst[i].timing</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+}
+<link rel="stylesheet" href="~/Assets/css/materialize.min.css">

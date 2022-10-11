@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <setParameter name="IIS Web Application Name" value="Web" />
+  <setParameter name="DefaultConnection-Web.config Connection String" value="Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\aspnet-Web-20211118122911.mdf;Initial Catalog=aspnet-Web-20211118122911;Integrated Security=True" />
+  <setParameter name="TNKQConnectionString-Web.config Connection String" value="Data Source=DESKTOP-QJCKCTC;Initial Catalog=TNKQ;User ID=sa;Password=sa2012" />
+  <setParameter name="TNKQConnectionString1-Web.config Connection String" value="Data Source=DESKTOP-QJCKCTC;Initial Catalog=TNKQ;User ID=sa;Password=sa2012" />
+</parameters>

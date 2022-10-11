@@ -1,0 +1,58 @@
+﻿@using Web.Models
+@using Web.Common
+@using System.Text.RegularExpressions;
+@{
+    ViewBag.Title = "Trang Chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var ListTest = Model as List<TestViewModel>;
+    var Scores = ViewBag.score as List<int>;
+}
+
+<div class="title-content">
+    <span class="title">@ViewBag.Title</span>
+    @if (TempData["status_id"] != null && (bool)TempData["status_id"])
+    {
+        <span class="timer success">@TempData["status"]</span> }
+    else
+    {
+        <span class="timer failed">@TempData["status"]</span>}
+</div>
+<div class="content row col s12 reset-margin">
+    <form action="/Student/DoingTest" method="post">
+        <div class="col s6 m4 l3">
+            <a>@DateTime.Now</a>
+            @foreach (var item in ListTest)
+            {
+                foreach (var item1 in item.getData_LICHTHI())
+                {
+                    string timeNow = DateTime.Now.Date.ToString("dd/MM/yyyy");
+                    DateTime date = item1.NGAYTHI.GetValueOrDefault();
+                    if (date.Date.ToString("dd/MM/yyyy").Equals(timeNow) && item1.ID_MONHOC.Equals(item.monhoc.ID_MONHOC) && item1.ID_LICHTHI.Equals(item.tgthi.ID_LICHTHI))
+                    {
+                        if (item.baithi.TINHTRANG == 0)
+                        {
+                            <div class="dashboard-inner-item " style="padding: 20px; position:absolute; margin-left:39%; margin-top:2%">
+                                <span class="title">Lịch thi: <b>@date.Date.ToString("dd/MM/yyyy")</b></span><br />
+                                <span class="title">Tiết: <b>@item1.TietBĐ - @item1.TietKT</b></span><br />
+                                <span class="title">Môn: <a name="TenMon">@item.monhoc.TENMONHOC</a></span><br />
+                                <span class="title">Mã đề: <input type="text" id="@item.baithi.ID_DETHI" name="ID_DETHI" value="@item.baithi.ID_DETHI" /></span><br />
+                                <span class="title">Kỳ thi: <b>@item.dethi.TENDETHI</b></span><br />
+                                <span class="title">Số câu hỏi: <b>@item.dethi.SLCAU</b></span><br />
+                                <span class="title">Thời gian: <b>@item.dethi.TGLamBai (phút)</b></span><br />
+                                <span class="title">Phòng thi: <b>@item.phongthi.TENPHONG</b></span><br />
+                                <a>@ViewBag.ID</a>
+                                <span class="title">Trạng thái: <b>Được phép</b></span><br />
+                                @Html.ActionLink("Làm Bài", "DoingTest", "Student", new { idDethi = item.baithi.ID_DETHI, idbaithi = item.baithi.ID_BAITHI }, new { @class = "btn full-width btn-danger" })
+                            </div>
+                        }
+                    }
+                }
+            }
+        </div>
+    </form>
+</div>
+
+<script>
+    $('.modal').modal();
+</script>
+

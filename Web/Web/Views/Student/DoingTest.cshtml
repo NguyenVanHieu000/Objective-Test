@@ -1,0 +1,205 @@
+﻿@using Web.Models
+@{
+    var list = Model as List<StudentQuestion>;
+    ViewBag.Title = ViewBag.ID;
+    string idBT = ViewBag.ID_BT;
+    string idDT = ViewBag.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link rel="stylesheet" href="~/Assets/css/materialize.min.css">
+}
+
+<div class="title-content">
+    <span class="title" style="padding-left: 115px;">@ViewBag.Title @idBT</span>
+    <span id="timer" class="timer timer-fixed">@ViewBag.min : @ViewBag.sec</span>
+</div>
+<div class="content row col s12 reset-margin" data-idbthi="idBT">
+    <div class="testing-left scrollbar" data-idbthi="idBT" style="padding-top:50px;">
+        @{ int i = 1;
+            foreach (var item in list)
+            {
+                if (item.baithi.ID_BAITHI.Equals(idBT) && item.ctdethi.ID_DTHI.Equals(idDT))
+                {
+                    if (item.ctbaithi.DapAn != null)
+                    {
+                        <a href="#quest-@i" class="menu-link" id="menu-link-@i" style="color:blue">Câu @i <span class="tick" id="tick-@i" style="color:blue">✓</span></a> }
+                    else
+                    {
+                        <a href="#quest-@i" class="menu-link" id="menu-link-@i" style="color:red">Câu @i <span class="tick" id="tick-@i"></span></a> }
+                    i = i + 1;
+                }
+            }
+        }
+    </div>
+    <div class="testing-right" data-idbthi="idBT">
+        <a href="@Url.Action("SubmitTest", new { idDethi = idDT, idBaithi = idBT })" id="idDT" data-idbthi="idBT" class="btn flat btn-danger" style=" font-size:20px ;font-weight:bold;width: 100%;margin-top: 20px;margin-bottom: 10px;" onclick="return confirm('Xác nhận nộp bài?')">Nộp Bài</a>
+        @{
+            int x = 1;
+            foreach (var item in list)
+            {
+                if (item.baithi.ID_BAITHI.Equals(idBT) && item.ctdethi.ID_DTHI.Equals(idDT))
+                {
+                    <div id="quest-@x" class="item-quest">
+                        <div class="quest-title">Câu @x :</div>
+                        <div class="quest-content">
+                            <span>@item.ctdethi.CAUHOI</span>
+                            @if (item.ctdethi.HINH != null)
+                            {
+                                <small class="title">(Câu hỏi có nội dung ảnh)</small><br />
+                                <img src="~/Assets/img_questions/@item.ctdethi.HINH" style="max-width:500px" />
+                            }
+                        </div>
+                        <div class="quest-answer">
+                            <p>
+                                <label>
+                                    @if (item.ctbaithi.DapAn != null && item.ctbaithi.DapAn.Trim().Equals(item.ctdethi.A.Trim()))
+                                    {
+                                        <input name="@item.ctdethi.ID_DTHI" data-idquest="@item.ctdethi.ID_CTDTHI" data-idbt="@item.ctbaithi.ID_BAITHI" type="radio" data-stt="@x" value="@item.ctdethi.A.Trim()" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input name="@item.ctdethi.ID_DTHI" data-idquest="@item.ctdethi.ID_CTDTHI" data-idbt="@item.ctbaithi.ID_BAITHI" type="radio" data-stt="@x" value="@item.ctdethi.A.Trim()" />
+                                    }
+                                    <span>@item.ctdethi.A.Trim()</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    @if (item.ctbaithi.DapAn != null && item.ctbaithi.DapAn.Trim().Equals(item.ctdethi.B.Trim()))
+                                    {
+                                        <input name="@item.ctdethi.ID_DTHI" data-idquest="@item.ctdethi.ID_CTDTHI" data-idbt="@item.ctbaithi.ID_BAITHI" type="radio" data-stt="@x" value="@item.ctdethi.B.Trim()" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input name="@item.ctdethi.ID_DTHI" data-idquest="@item.ctdethi.ID_CTDTHI" data-idbt="@item.ctbaithi.ID_BAITHI" type="radio" data-stt="@x" value="@item.ctdethi.B.Trim()" />}
+                                    <span>@item.ctdethi.B</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    @if (item.ctbaithi.DapAn != null && item.ctbaithi.DapAn.Trim().Equals(item.ctdethi.C.Trim()))
+                                    {
+                                        <input name="@item.ctdethi.ID_DTHI" data-idquest="@item.ctdethi.ID_CTDTHI" data-idbt="@item.ctbaithi.ID_BAITHI" type="radio" data-stt="@x" value="@item.ctdethi.C.Trim()" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input name="@item.ctdethi.ID_DTHI" data-idquest="@item.ctdethi.ID_CTDTHI" data-idbt="@item.ctbaithi.ID_BAITHI" type="radio" data-stt="@x" value="@item.ctdethi.C.Trim()" />}
+                                    <span>@item.ctdethi.C.Trim()</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    @if (item.ctbaithi.DapAn != null && item.ctbaithi.DapAn.Trim().Equals(item.ctdethi.D.Trim()))
+                                    {
+                                        <input name="@item.ctdethi.ID_DTHI" data-idquest="@item.ctdethi.ID_CTDTHI" data-idbt="@item.ctbaithi.ID_BAITHI" type="radio" data-stt="@x" value="@item.ctdethi.D.Trim()" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input name="@item.ctdethi.ID_DTHI" data-idquest="@item.ctdethi.ID_CTDTHI" data-idbt="@item.ctbaithi.ID_BAITHI" type="radio" data-stt="@x" value="@item.ctdethi.D.Trim()" />
+                                    }
+                                    <span>@item.ctdethi.D.Trim()</span>
+                                </label>
+                            </p>
+                        </div>
+                    </div>
+                    x = x + 1;
+                }
+            }
+        }
+
+    </div>
+</div>
+<script>
+    var min = @ViewBag.min;
+    var sec = @ViewBag.sec;
+      countdown();
+        function countdown() {
+            cdID = setInterval(function () {
+                if (sec == 0) {
+                    min--;
+                    sec = 60;
+                }
+                sec--;
+                if (min < 10) {
+                    $('#timer').css('color', 'red');
+                    min_text = '0' + min;
+                } else {
+                    min_text = min;
+                }
+                if (sec < 10)
+                    sec_text = '0' + sec;
+                else
+                    sec_text = sec;
+                $('#timer').text(min_text + ':' + sec_text);
+                if (min < 0) {
+                    alert('Hết giờ, hệ thống sẽ tự động nộp bài!');
+                    window.location.replace("@Url.Action("SubmitTest")");
+                }
+            }, 1000);
+     }
+    $(function () {
+        $('input[type=radio]').change(function () {
+            var stt = $(this).data("stt");
+            var idquest = $(this).data("idquest");
+            var value = $(this).val();
+            var idbt = $(this).data("idbt");
+            var data = {
+                id: idquest,
+                answer: value,
+                idbthi: idbt,
+                min: min,
+                sec: sec
+            }
+            var url = "@Url.Action("UpdateStudentTest")";
+            var success = function (result) {
+                $('#tick-' + stt).text("✓").css("color","blue");
+                $('#menu-link-' + stt).css("color", "blue");
+            };
+            $.post(url, data, success);
+        })
+    })
+    $(window).scroll(function () {
+        $('#footer').css("display", "none");
+        if (window.pageYOffset > 30) {
+            $('.testing-left').css("top", "65px").css("height", "calc(100% - 65px)");
+            $('#timer').css("margin-top", "0px");
+        }
+        if (window.pageYOffset < 30) {
+            $('.testing-left').css("top", "95px").css("height", "calc(100% - 95px)");
+            $('#timer').css("margin-top", "30px");
+        }
+    });
+    //jQuery for Page Scroll - Single page
+    $('a[href*="#"]:not([href="#"])').click(function () {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 65
+                }, 500);
+                return false;
+            }
+        }
+    });
+     window.onbeforeunload = function () {
+         function getUrlParameter(name) {
+             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+             var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                 results = regex.exec(location.search);
+             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+         }
+         var qsp ='idbaithi',
+             para = getUrlParameter(qsp);
+         console.log(para);
+         var url = "@Url.Action("UpdateTiming")";
+         var data = {
+             idbt: para,
+             min: min,
+             sec: sec
+         }
+         var success = function () {
+         };
+         $.post(url, data, success);
+    }
+</script>
+

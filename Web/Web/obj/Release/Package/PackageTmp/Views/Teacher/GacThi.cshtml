@@ -1,0 +1,35 @@
+﻿@model Web.Models.LstGacThi
+       
+@{
+    ViewBag.Title = "GacThi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    @Html.ActionLink("Trở về", "index", new { @style = "font-size:20px" })
+</div>
+@if (Model.lst==null)
+{
+    <p>Hôm nay không có lịch thi</p>
+}
+else
+{
+    <div class="content row col s12 reset-margin">
+        @for (int i = 0; i < Model.lst.Count; i++)
+        {
+            string timeNow = DateTime.Now.Date.ToString("dd/MM/yyyy");
+            DateTime date = Model.lst[i].ngayThi.GetValueOrDefault();
+            if (date.Date.ToString("dd/MM/yyyy").Equals(timeNow))
+            {
+                <div class="dashboard-inner-item ">
+                    <span class="title">Lịch thi: <b>@date.Date.ToString("dd/MM/yyyy")</b></span><br />
+                    <span class="title">Môn: <b>@Model.lst[i].tenMonHoc</b></span><br />
+                    <span class="title">Tiết: <b>@Model.lst[i].TietBD.ToString() - @Model.lst[i].TietKT.ToString()</b></span><br />
+                    <span class="title">Phòng: <b>@Model.lst[i].tenPhong</b></span><br />
+                    @Html.ActionLink("Submit", "PhongThi", "Teacher", new { gioBD = Model.lst[i].TietBD, tenPhongThi = Model.lst[i].tenPhong }, new { @class = "btn full-width btn-danger" })
+                </div>
+            }
+        }
+    </div>
+}
+
+

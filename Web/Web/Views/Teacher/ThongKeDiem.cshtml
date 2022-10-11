@@ -1,0 +1,104 @@
+﻿@model Web.Models.LstThongKe
+@{
+    ViewBag.Title = "ThongKeDiem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/Content/bootstrap/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+}
+
+@if (Model.list == null)
+{
+    <p>Vui lòng đăng nhập</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Login")
+}
+else
+{
+    <div>
+        @Html.ActionLink("Trở về", "index", new { @style = "font-size:50px" })
+    </div>
+    <div class="col-md-2">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <p>Môn học</p>
+            <div>@Html.DropDownList("idMon", (IEnumerable<SelectListItem>)ViewBag.dsMonHoc, "Chọn môn học", new { @class = "form-control" })</div>
+            <p>Học kỳ</p>
+            <div>@Html.DropDownList("idHK", (IEnumerable<SelectListItem>)ViewBag.dsHocKy, "Chọn học kỳ", new { @class = "form-control" })</div>
+            <p>Năm học</p>
+            <div>@Html.DropDownList("idNam", (IEnumerable<SelectListItem>)ViewBag.dsNamHoc, "Chọn năm học", new { @class = "form-control" })</div>
+            <div class="wrapper">
+                <div style="width: 135px">
+                <input type="submit" value="Lọc" class="btn btn-border btn-primary btn-animated" style="width: 135px" />
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-10">
+        @using (Html.BeginForm())
+        {
+            <p>
+                Tìm kiếm: @Html.TextBox("SearchString")
+                <div class="wrapper">
+                    <div style="width: 135px">
+                        <input type="submit" value="Tìm kiếm" class="btn btn-border btn-primary btn-animated" style="width: 135px" /></div>
+                </div>
+            </p>
+        }
+        @using (Html.BeginForm("ExportExcel", "Teacher", FormMethod.Post))
+        {
+            <div class="wrapper">
+                <div style="width: 135px">
+                    <input type="submit" value="Tải về" class="btn btn-border btn-primary btn-animated" style="width: 135px" /></div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>ID Sinh viên</td>
+                        <td>Tên sinh viên</td>
+                        <td>Môn học</td>
+                        <td>Học kì</td>
+                        <td>Năm học</td>
+                        <td>Điểm</td>
+                        <td>
+                            <div class="checkbox"><input type="checkbox" id="isCheckAll" name="isCheckAll" onclick="return checkAllVerifySelection()" /></div>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.list.Count; i++)
+                    {
+                        <tr>
+                            <td>@Model.list[i].ID_SV</td>
+                            <td>@Model.list[i].TenSV</td>
+                            <td>@Model.list[i].TenMonhoc</td>
+                            <td>@Model.list[i].TenHocKy</td>
+                            <td>@Model.list[i].TenNamHoc</td>
+                            <td>@Model.list[i].DiemThi</td>
+                            <td>
+                                @Html.CheckBoxFor(t => Model.list[i].isCheck, new { @class = "isCheck" })
+                                @Html.HiddenFor(t => Model.list[i].IDThongKe)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+        }
+    </div>
+}
+
+<script>
+    function checkAllVerifySelection() {
+        $("#isCheckAll").click(function () {
+            $(".isCheck").prop('checked', $(this).prop('checked'));
+        });
+        $(".isCheck").change(function () {
+            if (!$(this).prop("checked")) {
+                $("#isCheckAll").prop("checked", false);
+            }
+        })
+        return true;
+    }
+</script>
+
+
+

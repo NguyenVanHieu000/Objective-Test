@@ -1,0 +1,5 @@
+D:\BaiTap\KhoaLuanTotNghiep\TNKQuan\TNKQUAN_KLTN\BLL_DAL\bin\Release\BLL_DAL.dll.config
+D:\BaiTap\KhoaLuanTotNghiep\TNKQuan\TNKQUAN_KLTN\BLL_DAL\bin\Release\BLL_DAL.dll
+D:\BaiTap\KhoaLuanTotNghiep\TNKQuan\TNKQUAN_KLTN\BLL_DAL\bin\Release\BLL_DAL.pdb
+D:\BaiTap\KhoaLuanTotNghiep\TNKQuan\TNKQUAN_KLTN\BLL_DAL\obj\Release\BLL_DAL.dll
+D:\BaiTap\KhoaLuanTotNghiep\TNKQuan\TNKQUAN_KLTN\BLL_DAL\obj\Release\BLL_DAL.pdb
